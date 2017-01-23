@@ -1,0 +1,23 @@
+{
+    "name": "jlentink/eloqua-forms",
+    "description": "Easy search with google custom search",
+    "keywords": [
+        "Oracle", "Eloqua"
+    ],
+    "authors": [
+        {
+            "name": "Jason Lentink",
+            "email": "jason@mediamonks.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "EloquaForms\\": "src/"
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": ">=6.2.2",
+        "egulias/email-validator": "~2.1"
+    }
+}
