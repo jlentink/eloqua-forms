@@ -3,6 +3,7 @@
 namespace EloquaForms;
 
 use EloquaForms\Data\Form;
+use EloquaForms\Data\Forms;
 use GuzzleHttp\Exception\ClientException;
 
 class Client
@@ -88,12 +89,21 @@ class Client
 
 
     /**
-     * Get a Form class to post to Eloqua
+     * Get a Form class to post/retrieve to/from Eloqua
      *
      * @return Form
      */
     public function getForm(){
         return new Form($this);
+    }
+
+    /**
+     * Get the Forms object
+     *
+     * @return Forms
+     */
+    public function getForms(){
+        return new Forms($this);
     }
 
     /**

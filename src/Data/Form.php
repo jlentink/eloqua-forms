@@ -37,6 +37,11 @@ class Form
     protected $_formFields;
 
     /**
+     * @var string
+     */
+    protected $_name = "";
+
+    /**
      * Form constructor.
      *
      * @param Client $client
@@ -169,5 +174,24 @@ class Form
         $this->_client->performRequest(self::API_ENDPOINT . $this->_formId, $data);
         return true;
     }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->_name;
+    }
+
+    /**
+     * @param string $name
+     * @return Form
+     */
+    public function setName($name)
+    {
+        $this->_name = $name;
+        return $this;
+    }
+
 
 }
