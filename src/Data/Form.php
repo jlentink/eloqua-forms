@@ -63,6 +63,14 @@ class Form
     }
 
     /**
+     * @return int
+     */
+    public function getFormId()
+    {
+        return $this->_formId;
+    }
+
+    /**
      * Add a data field to Eloqua.
      *
      * @param $fieldId
