@@ -54,4 +54,34 @@ abstract class Validation implements ValidationInterface
         return $this->_validate($value);
     }
 
+    /**
+     * Get the message.
+     *
+     * @return string
+    */
+    public function getMessage() {
+        return $this->_message;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName() {
+        return $this->_name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription() {
+        return $this->_description;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isEnabled() {
+        return $this->_enabled;
+    }
+
 }
