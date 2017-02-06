@@ -36,6 +36,11 @@ class FieldElement
     private $_displayType = null;
 
     /**
+     * @var null|string
+     */
+    private $_dataType = null;
+
+    /**
      * @var string
      */
     private $_htmlName = '';
@@ -66,6 +71,12 @@ class FieldElement
 
         if(isset($element->style))
             $this->_style = $element->style;
+
+        if(isset($element->displayType))
+            $this->_displayType = $element->displayType;
+
+        if(isset($element->dataType))
+            $this->_dataType = $element->dataType;
 
         if(isset($element->createdFromContactFieldId))
             $this->_createdFromContactFieldId = $element->createdFromContactFieldId;
@@ -125,6 +136,13 @@ class FieldElement
     public function getDisplayType()
     {
         return $this->_displayType;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDataType() {
+        return $this->_dataType;
     }
 
     /**
