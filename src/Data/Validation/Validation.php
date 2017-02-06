@@ -8,29 +8,36 @@ abstract class Validation implements ValidationInterface
     /**
      * @var string
      */
-    private $_name = '';
+    protected $_name = '';
 
     /**
      * @var string
      */
-    private $_description = '';
+    protected $_description = '';
 
     /**
      * @var bool
      */
-    private $_enabled = false;
+    protected $_enabled = false;
 
     /**
      * @var string
      */
-    private $_message = '';
+    protected $_message = '';
+
+    /**
+     * @var \stdClass
+     */
+    protected $_completeObject;
 
     public function __construct($eloquaValidationObject)
     {
-        $this->_name = $eloquaValidationObject->name;
+        print_r($eloquaValidationObject);
+        $this->_name = $eloquaValidationObject->condition->type;
         $this->_description = $eloquaValidationObject->description;
         $this->_enabled = $eloquaValidationObject->isEnabled;
         $this->_message = $eloquaValidationObject->message;
+        $this->_completeObject = $eloquaValidationObject;
     }
 
     /**
