@@ -50,12 +50,18 @@ class FieldElement
      */
     private $_useGlobalSubscriptionStatus = false;
 
+  /**
+   * @var array
+   */
+    private $_optionList;
+
     /**
      * @var Validation[]
      */
     private $_validations = [];
 
     public function __construct(\stdClass $element){
+        $this->_optionList = array();
 
         if(isset($element->type))
             $this->_type = $element->type;
@@ -154,6 +160,20 @@ class FieldElement
     }
 
     /**
+     * @return array
+     */
+    public function getOptionList() {
+      return $this->_optionList;
+    }
+
+    /**
+     * @param array $optionList
+     */
+    public function setOptionList(array $optionList) {
+      $this->_optionList = $optionList;
+    }
+
+  /**
      * @return bool
      */
     public function isUseGlobalSubscriptionStatus()

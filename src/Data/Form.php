@@ -164,6 +164,17 @@ class Form
     }
 
     /**
+     * Get option list.
+     *
+     * @param $id
+     * @return mixed
+     */
+    protected function getOptionList($id) {
+      $form = $this->_client->performRequest('/api/REST/2.0/assets/optionList/' . $id, null, Client::HTTP_GET);
+      return \GuzzleHttp\json_decode($form->getBody()->getContents());
+    }
+
+  /**
      * Post the form to Eloqua
      *
      * @throws ClientException
