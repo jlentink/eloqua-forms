@@ -157,7 +157,8 @@ class Form
         $fields = [];
 
         foreach($form->elements as $element){
-            $fieldElement = new FieldElement($element);
+            $fieldElement = new FieldElement($element, $this->_client);
+            $fieldElement->getOptionList();
             $fields[] = $fieldElement;
         }
         return $fields;

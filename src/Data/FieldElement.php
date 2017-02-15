@@ -2,10 +2,14 @@
 
 namespace EloquaForms\Data;
 
+use EloquaForms\Client;
 use EloquaForms\Data\Validation\Validation;
+use EloquaForms\Exception;
 
 class FieldElement
 {
+
+    const API_ENDPOINT = '/api/REST/2.0/assets/optionList/%s';
     /**
      * @var null|string
      */
@@ -50,18 +54,34 @@ class FieldElement
      */
     private $_useGlobalSubscriptionStatus = false;
 
-  /**
-   * @var array
-   */
-    private $_optionList;
+    /**
+     * @var int
+     */
+    private $_optionListId = 0;
+
+    /**
+     * @var FieldOption[]
+     */
+    private $_options = [];
+
+    /**
+     * @var Client
+     */
+    private $_client;
 
     /**
      * @var Validation[]
      */
     private $_validations = [];
 
-    public function __construct(\stdClass $element){
-        $this->_optionList = array();
+    /**
+     * FieldElement constructor.
+     * @param \stdClass $element
+     * @param Client $client
+     */
+    public function __construct(\stdClass $element, Client $client){
+
+        $this->_client = $client;
 
         if(isset($element->type))
             $this->_type = $element->type;
@@ -86,6 +106,10 @@ class FieldElement
 
         if(isset($element->createdFromContactFieldId))
             $this->_createdFromContactFieldId = $element->createdFromContactFieldId;
+
+        if(isset($element->optionListId))
+            $this->_optionListId = $element->optionListId;
+
 
         if(isset($element->validations)){
             foreach($element->validations as $validationObject){
@@ -152,6 +176,38 @@ class FieldElement
     }
 
     /**
+     * Get options
+     *
+     * @return bool|FieldOption[]
+     */
+    public function getOptionList(){
+        if(0 == $this->_optionListId)
+            return false;
+
+        if(!count($this->_options))
+            $this->retrieveOptionList();
+
+        return $this->_options;
+
+    }
+
+    /**
+     * @throws Exception
+     */
+    protected function retrieveOptionList(){
+        $optionListResponse = $this->_client->performRequest(sprintf(self::API_ENDPOINT, $this->_optionListId), null, Client::HTTP_GET);
+        $json = \GuzzleHttp\json_decode($optionListResponse->getBody()->getContents());
+
+        if(null === $json)
+            throw new Exception('Options list could not be decoded');
+
+        foreach($json->elements as $optionObject){
+            $option = new FieldOption($optionObject);
+            $this->_options[] = $option;
+        }
+    }
+
+    /**
      * @return null|string
      */
     public function getHtmlName()
@@ -160,20 +216,6 @@ class FieldElement
     }
 
     /**
-     * @return array
-     */
-    public function getOptionList() {
-      return $this->_optionList;
-    }
-
-    /**
-     * @param array $optionList
-     */
-    public function setOptionList(array $optionList) {
-      $this->_optionList = $optionList;
-    }
-
-  /**
      * @return bool
      */
     public function isUseGlobalSubscriptionStatus()
